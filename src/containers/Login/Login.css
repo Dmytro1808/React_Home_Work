@@ -12,9 +12,8 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}*/
-
-/*.wrapper {
+}
+/* .wrapper {
   width: 500px;
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -23,4 +22,4 @@
   color: black;
   border-radius: 10px;
   padding: 30px 30px 40px;
-}*/
+}

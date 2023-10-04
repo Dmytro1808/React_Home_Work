@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Login from './containers/Login/Login';
-import ProductTable from './containers/ProductTable/ProductTable';
+import ProductTable from './containers/ProductTable/ProductTable.js';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
