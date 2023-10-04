@@ -1,0 +1,59 @@
+.btn-preview {
+  width: 200px;
+  height: 50px;
+  background: white;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-direction: row-reverse;
+  gap: 14px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-preview:active {
+  position: relative;
+  top: 1px;
+}
+
+.btn-preview:hover {
+  background-color: #a8a8a8;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+.FaRegUser {
+  position: relative;
+  margin-left: 19px;
+}
+
+.FaRegUser::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  border: 2px solid black;
+}
+
+.FaRegUser::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid black;
+}
+
+.VscAdd {
+  position: relative;
+  margin-left: 19px;
+}
