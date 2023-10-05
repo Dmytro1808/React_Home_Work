@@ -1,0 +1,56 @@
+.arrow-up::after,
+.arrow-down::after {
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.table {
+  display: block;
+  overflow-x: auto;
+  table-layout: fixed;
+  border-collapse: collapse;
+  box-shadow: 0 10px 10px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: auto;
+
+  margin: auto;
+  overflow-x: auto;
+}
+
+.table thead {
+  background: white;
+  color: #333;
+}
+
+.table th,
+.table td {
+  padding: 1.25rem;
+  text-align: center;
+}
+.table td {
+  border-top: 0.5px solid white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tbody tr:hover {
+  background-color: #a8a8a8;
+}
+
+.actions svg {
+  cursor: pointer;
+}
+.delete-btn:hover {
+  color: red;
+}
+.delete-change:hover {
+  color: green;
+}
