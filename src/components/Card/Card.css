@@ -10,3 +10,11 @@
   height: 57px;
   margin: 30px 0;
 }
+.error-message {
+  margin-top: 20px;
+  color: white;
+  text-align: center;
+}
+.input-box.empty {
+  border: 2px solid red;
+}

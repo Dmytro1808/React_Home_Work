@@ -1,9 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./InputPassword.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-function InputPassword() {
-  const [password, setPassword] = useState("");
+function InputPassword({ value, onChange }) {
   const [visible, setVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -12,8 +11,14 @@ function InputPassword() {
 
   return (
     <div className="Input-position">
-      <input value={password} autoComplete="current-password" type={visible ? "text" : "password"} placeholder="Password" 
-        id="password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        value={value}
+        onChange={onChange}
+        autoComplete="current-password"
+        type={visible ? "text" : "password"}
+        placeholder="Password"
+        id="password"
+      />
       <span className="span_eye" onClick={toggleVisibility}>
         {visible ? (
           <FaEye className="text-white text-2xl" />

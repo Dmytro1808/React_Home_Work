@@ -1,9 +1,11 @@
-import './Button.css';
-import React from 'react';
+import "./Button.css";
+import React from "react";
 
-function Button () {
+function Button({ onClick }) {
   return (
-    <button type='submit' className='btn'>Login</button>
+    <button type="submit" className="btn">
+      Login
+    </button>
   );
 }
 

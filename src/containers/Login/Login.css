@@ -6,14 +6,14 @@
   font-family: "Inter", sans-serif;
 }
 
-/*body {
+body {
   background-color: #7b68ee;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
-/* .wrapper {
+.wrapper {
   width: 500px;
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
