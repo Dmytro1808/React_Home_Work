@@ -1,8 +1,22 @@
 import "./ProductsTableItems.css";
 import React from "react";
 import { FaPen, FaShoppingBasket } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
-function ProductsTableItems({ data }) {
+function ProductsTableItems() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch(
+        "https://6525466d67cfb1e59ce6ff1f.mockapi.io/items"
+      );
+      const data = await response.json();
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <div className="table-wrapper">
@@ -48,15 +62,11 @@ function ProductsTableItems({ data }) {
               <th>
                 <span>Price $</span>
               </th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-            {data.map((product) => (
+            {products.map((product) => (
               <tr key={product.id}>
-                <td>
-                  <span>{product.id}</span>
-                </td>
                 <td>
                   <span>{product.category}</span>
                 </td>
