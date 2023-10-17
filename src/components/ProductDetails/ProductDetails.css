@@ -8,8 +8,5 @@
 
 body {
   background-color: #7b68ee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
 }

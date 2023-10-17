@@ -3,6 +3,7 @@ import { FaRegUser } from "react-icons/fa";
 import { VscAdd } from "react-icons/vsc";
 import ProductsTableItems from "../../components/ProductsTableItems/ProductsTableItems";
 import ButtonPreview from "../../components/ButtonPreview/ButtonPreview";
+import { Link } from "react-router-dom";
 
 function ProductTable() {
   const preview = <FaRegUser className="FaRegUser " />;
@@ -11,9 +12,9 @@ function ProductTable() {
   return (
     <>
       <div className="header">
-        <a href="#" className="logo-link">
+        <Link to="/Login" className="logo-link">
           Harvey Norman
-        </a>
+        </Link>
       </div>
       <div className="button-div">
         <ButtonPreview title="Preview" icon={preview} />

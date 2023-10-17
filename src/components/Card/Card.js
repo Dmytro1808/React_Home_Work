@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import Input from "../../components/Input/Input.js";
 import InputPassword from "../../components/InputPassword/InputPassword.js";
 import Button from "../../components/Button/Button.js";
+import { useNavigate } from "react-router-dom";
 
 function Card() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoginClicked, setIsLoginClicked] = useState(false);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -24,9 +26,11 @@ function Card() {
 
     if (username === "Дмитрий" && password === "181994") {
       localStorage.setItem("token", "Dmytro");
+      navigate("/ProductTable");
       setErrorMessage("");
     } else if (username === "Олег" && password === "221991") {
       localStorage.setItem("token", "Oleg");
+      navigate("/ProductTable");
       setErrorMessage("");
     } else {
       setErrorMessage("Invalid user name or password");
