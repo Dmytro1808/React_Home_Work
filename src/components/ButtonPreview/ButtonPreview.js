@@ -1,9 +1,12 @@
-import './ButtonPreview.css';
-import React from 'react';
-
+import "./ButtonPreview.css";
+import React from "react";
+import { Link } from "react-router-dom";
 function ButtonPreview(props) {
   return (
-    <button type='submit' className='btn-preview'>{props.title}{props.icon}</button>
+    <Link to="/ProductPreview" className="btn-preview">
+      {props.title}
+      {props.icon}
+    </Link>
   );
 }
 

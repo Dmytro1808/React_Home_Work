@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import ProductTable from "./containers/ProductTable/ProductTable.js";
+import AppRouter from "./router";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ProductTable />
-    {/* <Login  /> */}
-    {/* <ProductPreview /> */}
+    <AppRouter />
   </React.StrictMode>
 );
