@@ -7,19 +7,17 @@ import PrivateRoute from "../src/privateRoute";
 
 function AppRouter() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/Login" element={<Login />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/ProductTable" element={<ProductTable />} />
-            <Route path="/ProductPreview" element={<ProductPreview />} />
-            <Route path="/ProductPreview/:id" element={<ProductDetails />} />
-          </Route>
-          <Route path="*" element={<div>404. Page is not found!</div>} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/producttable" element={<ProductTable />} />
+          <Route path="/productpreview" element={<ProductPreview />} />
+          <Route path="/productpreview/:id" element={<ProductDetails />} />
+        </Route>
+        <Route path="*" element={<div>404. Page is not found!</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
