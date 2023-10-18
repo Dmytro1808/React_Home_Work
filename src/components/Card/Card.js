@@ -26,11 +26,11 @@ function Card() {
 
     if (username === "Дмитрий" && password === "181994") {
       localStorage.setItem("token", "Dmytro");
-      navigate("/ProductTable");
+      navigate("/product-table/");
       setErrorMessage("");
     } else if (username === "Олег" && password === "221991") {
       localStorage.setItem("token", "Oleg");
-      navigate("/ProductTable");
+      navigate("/product-table/");
       setErrorMessage("");
     } else {
       setErrorMessage("Invalid user name or password");
