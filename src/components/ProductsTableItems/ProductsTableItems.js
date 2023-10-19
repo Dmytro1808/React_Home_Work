@@ -2,15 +2,14 @@ import "./ProductsTableItems.css";
 import React from "react";
 import { FaPen, FaShoppingBasket } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { API } from "../../constance/URL";
 
 function ProductsTableItems() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch(
-        "https://6525466d67cfb1e59ce6ff1f.mockapi.io/items"
-      );
+      const response = await fetch(API);
       const data = await response.json();
       setProducts(data);
     };

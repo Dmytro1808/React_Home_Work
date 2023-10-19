@@ -12,7 +12,7 @@ function ProductTable() {
   return (
     <>
       <div className="header">
-        <Link to="/Login" className="logo-link">
+        <Link to="/login" className="logo-link">
           Harvey Norman
         </Link>
       </div>
