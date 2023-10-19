@@ -5,8 +5,18 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
-
-body {
+.new-body {
   background-color: #7b68ee;
   min-height: 100vh;
+  display: block;
+}
+.new-logo-link {
+  font-size: 30px;
+  font-weight: 700;
+  color: white;
+}
+.header-details {
+  margin-top: 40px;
+  margin-left: 30px;
+  margin-bottom: 30px;
 }
