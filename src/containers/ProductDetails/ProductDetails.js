@@ -3,24 +3,15 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./ProductDetails.css";
 import { FaLongArrowAltLeft, FaCheckCircle } from "react-icons/fa";
-import myImageDyson from "../../components/assets/Dyson V15 Detect Absolute vacuum.jpg";
-import myImageVenturer from "../../components/assets/Venturer 7 I.jpg";
-import myImagedji from "../../components/assets/dji-mini-4-.jpg";
-import myImageLG from "../../components/assets/LG 65 SMART 4K.jpg";
-import myImagePlaystation from "../../components/assets/playstation-5.jpg";
-import myImageBowerswilkins from "../../components/assets/bowerswilkins.jpg";
+import { API } from "../../constance/URL";
 
 function ProductDetails() {
-  let productImage = null;
-
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response = await fetch(
-        `https://6525466d67cfb1e59ce6ff1f.mockapi.io/items/${id}`
-      );
+      const response = await fetch(`${API}/${id}`);
       const data = await response.json();
       setProduct(data);
     };
@@ -31,24 +22,10 @@ function ProductDetails() {
     };
   }, [id]);
 
-  if (id === "1") {
-    productImage = myImageDyson;
-  } else if (id === "2") {
-    productImage = myImagedji;
-  } else if (id === "3") {
-    productImage = myImageVenturer;
-  } else if (id === "4") {
-    productImage = myImageLG;
-  } else if (id === "5") {
-    productImage = myImagePlaystation;
-  } else if (id === "6") {
-    productImage = myImageBowerswilkins;
-  }
-
   return (
     <>
       <div className="header-details">
-        <Link to="/Login" className="new-logo-link">
+        <Link to="/login" className="new-logo-link">
           Harvey Norman
         </Link>
       </div>
@@ -68,11 +45,11 @@ function ProductDetails() {
             </div>
           </div>
 
-          <div className="flex flex-wrap ml-[30px] mt-[30px] gap-[30px]">
+          <div className="flex flex-wrap ml-[30px] mt-[30px] gap-[40px]">
             <div className="rounded-2xl overflow-hidden">
               <img
-                className="max-w-full w-[350px] h-auto"
-                src={productImage}
+                className="max-w-full w-[400px] h-auto"
+                src={product.img}
                 alt="img"
               ></img>
             </div>
