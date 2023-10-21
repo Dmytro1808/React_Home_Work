@@ -54,3 +54,6 @@ tbody tr:hover {
 .delete-change:hover {
   color: green;
 }
+.blur-background {
+  filter: blur(4px);
+}

@@ -1,11 +1,48 @@
 import "./ProductsTableItems.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaPen, FaShoppingBasket } from "react-icons/fa";
-import { useEffect, useState } from "react";
 import { API } from "../../constance/URL";
+import WindowDelete from "../WindowDelete/WindowDelete";
 
 function ProductsTableItems() {
   const [products, setProducts] = useState([]);
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+
+  const deleteProduct = async (id) => {
+    await fetch(`${API}/${id}`, {
+      method: "DELETE",
+    });
+    //запрос нового массива
+    const response = await fetch(API);
+    const data = await response.json();
+    setProducts(data);
+
+    closeDeleteModal();
+  };
+
+  const openDeleteModal = (id) => {
+    setDeleteItemId(id);
+    const modal = document.getElementById("modalId");
+    if (modal) {
+      modal.classList.remove("hidden");
+    }
+
+    setDeleteModalVisible(true);
+    document.querySelector(".table").classList.add("blur-background");
+    document.querySelector(".header").classList.add("blur-background");
+    document.querySelector(".button-div").classList.add("blur-background");
+  };
+  const closeDeleteModal = () => {
+    const modal = document.getElementById("modalId");
+    if (modal) {
+      modal.classList.add("hidden");
+    }
+    setDeleteModalVisible(false);
+    document.querySelector(".table").classList.remove("blur-background");
+    document.querySelector(".header").classList.remove("blur-background");
+    document.querySelector(".button-div").classList.remove("blur-background");
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,7 +55,7 @@ function ProductsTableItems() {
 
   return (
     <>
-      <div className="table-wrapper">
+      <div>
         <table className="table">
           <thead>
             <tr>
@@ -61,11 +98,15 @@ function ProductsTableItems() {
               <th>
                 <span>Price $</span>
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product.id}>
+                <td>
+                  <span>{product.id}</span>
+                </td>
                 <td>
                   <span>{product.category}</span>
                 </td>
@@ -81,13 +122,22 @@ function ProductsTableItems() {
                 <td>
                   <span className="actions">
                     <FaPen className="w-[40px] delete-change" />
-                    <FaShoppingBasket className="w-[40px] delete-btn" />
+                    <FaShoppingBasket
+                      className="w-[40px] delete-btn"
+                      onClick={() => openDeleteModal(product.id)}
+                    />
                   </span>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {isDeleteModalVisible && (
+          <WindowDelete
+            closeModal={closeDeleteModal}
+            onClick={() => deleteProduct(deleteItemId)}
+          />
+        )}
       </div>
     </>
   );
