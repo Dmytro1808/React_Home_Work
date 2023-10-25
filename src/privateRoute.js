@@ -3,7 +3,7 @@ import React from "react";
 
 function PrivateRoute() {
   if (!localStorage.getItem("token")) {
-    return <Navigate to="/Login" replace />;
+    return <Navigate to="/login" replace />;
   }
   return <Outlet />;
 }
