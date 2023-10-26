@@ -3,12 +3,17 @@ import React, { useEffect, useState } from "react";
 import { FaPen, FaShoppingBasket } from "react-icons/fa";
 import { API } from "../../constance/URL";
 import WindowDelete from "../WindowDelete/WindowDelete";
+import WindowEditAdd from "../WindowEditAdd/WindowEditAdd";
 
 function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
   const [products, setProducts] = useState([]);
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [isTableBlurred, setTableBlurred] = useState(false);
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const [titleEdit, setTitleEdit] = useState("");
+
+  const title_edit = "Edit product";
 
   const deleteProduct = async (id) => {
     await fetch(`${API}/${id}`, {
@@ -112,7 +117,12 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
               </td>
               <td>
                 <span className="actions">
-                  <FaPen className="w-[40px] delete-change" />
+                  <FaPen
+                    className="w-[40px] delete-change"
+                    onClick={() => {
+                      setEditModalVisible(true);
+                    }}
+                  />
                   <FaShoppingBasket
                     className="w-[40px] delete-btn"
                     onClick={() => {
@@ -125,6 +135,12 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
           ))}
         </tbody>
       </table>
+      {isEditModalVisible && (
+        <WindowEditAdd
+          closeModal={() => setEditModalVisible(false)}
+          title={title_edit}
+        />
+      )}
       {isDeleteModalVisible && (
         <WindowDelete
           closeModal={closeDeleteModal}

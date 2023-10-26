@@ -5,12 +5,24 @@ import ProductsTableItems from "../../components/ProductsTableItems/ProductsTabl
 import ButtonPreview from "../../components/ButtonPreview/ButtonPreview";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import WindowEditAdd from "../../components/WindowEditAdd/WindowEditAdd";
 
 function ProductTable() {
   const preview = <FaRegUser className="FaRegUser " />;
   const add = <VscAdd className="VscAdd" />;
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(true);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isBasketClicked, setIsBasketClicked] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [title_add, setTitleAdd] = useState("Add product");
+
+  const handleAddProductClick = () => {
+    setTitleAdd("Add product");
+    setIsModalVisible(true);
+  };
+  const closeEditModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <>
       <div className="header">
@@ -22,9 +34,17 @@ function ProductTable() {
         </Link>
       </div>
       <div className={`button-div ${isBasketClicked ? "blur-background" : ""}`}>
-        <ButtonPreview title="Preview" icon={preview} />
-        <ButtonPreview title="Add product" icon={add} />
+        <ButtonPreview title="Preview" icon={preview} to="/product-preview" />
+        <ButtonPreview
+          title="Add product"
+          icon={add}
+          onClick={handleAddProductClick}
+        />
+        {isModalVisible && (
+          <WindowEditAdd closeModal={closeEditModal} title={title_add} />
+        )}
       </div>
+
       <div className="mt-[5px]">
         <h1 className="text-white text-[64px] font-medium leading-normal text-center">
           Products

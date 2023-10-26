@@ -23,7 +23,7 @@ function WindowDelete({ closeModal, onClick }) {
                   id="modal"
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 
                   rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center "
-                  data-modal-hide="cencel"
+                  data-modal-hide="cancel"
                   onClick={() => closeModal()}
                 >
                   <svg

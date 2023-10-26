@@ -5,7 +5,7 @@ import Login from "./containers/Login/Login";
 import ProductDetails from "./containers/ProductDetails/ProductDetails";
 import ProductPreview from "./containers/ProductPreview/ProductPreview";
 import PrivateRoute from "../src/privateRoute";
-
+import WindowEditAdd from "./components/WindowEditAdd/WindowEditAdd";
 function AppRouter() {
   const [products] = useState([]);
 
@@ -16,6 +16,7 @@ function AppRouter() {
         <Route element={<PrivateRoute />}>
           <Route path="/product-table/" element={<ProductTable />} />
           <Route path="/product-preview/" element={<ProductPreview />} />
+          <Route path="/edit" element={<WindowEditAdd />} />
           <Route
             path="/product-details/:id"
             element={<ProductDetails products={products} />}
