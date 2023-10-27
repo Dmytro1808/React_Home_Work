@@ -13,8 +13,6 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [titleEdit, setTitleEdit] = useState("");
 
-  const title_edit = "Edit product";
-
   const deleteProduct = async (id) => {
     await fetch(`${API}/${id}`, {
       method: "DELETE",
@@ -39,6 +37,7 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
     setDeleteModalVisible(false);
     setIsDeleteModalVisible(false);
     setIsBasketClicked(false);
+    setTableBlurred(false);
   };
 
   useEffect(() => {
@@ -118,11 +117,15 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
               <td>
                 <span className="actions">
                   <FaPen
-                    className="w-[40px] delete-change"
+                    className={`w-[40px] delete-change ${
+                      isTableBlurred ? "blur-background" : ""
+                    }`}
                     onClick={() => {
                       setEditModalVisible(true);
+                      setTableBlurred(true);
                     }}
                   />
+
                   <FaShoppingBasket
                     className="w-[40px] delete-btn"
                     onClick={() => {
@@ -137,8 +140,11 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
       </table>
       {isEditModalVisible && (
         <WindowEditAdd
-          closeModal={() => setEditModalVisible(false)}
-          title={title_edit}
+          closeModal={() => {
+            setEditModalVisible(false);
+            setTableBlurred(false);
+          }}
+          title="Edit product"
         />
       )}
       {isDeleteModalVisible && (
