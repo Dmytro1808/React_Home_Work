@@ -2,10 +2,11 @@ import "./ProductTable.css";
 import { FaRegUser } from "react-icons/fa";
 import { VscAdd } from "react-icons/vsc";
 import ProductsTableItems from "../../components/ProductsTableItems/ProductsTableItems";
+import WindowEditAdd from "../../components/WindowEditAdd/WindowEditAdd";
 import ButtonPreview from "../../components/ButtonPreview/ButtonPreview";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
-import WindowEditAdd from "../../components/WindowEditAdd/WindowEditAdd";
+import React, { useState, useEffect } from "react";
+import { API } from "../../constance/URL";
 
 function ProductTable() {
   const preview = <FaRegUser className="FaRegUser " />;
@@ -15,6 +16,37 @@ function ProductTable() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [titleAdd, setTitleAdd] = useState("Add product");
   const [isBlurVisible, setIsBlurVisible] = useState(false);
+  const [isTableBlurred, setTableBlurred] = useState(false);
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  const addProduct = async (newProduct) => {
+    await fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newProduct),
+    });
+
+    const response = await fetch(API);
+    const data = await response.json();
+    setProducts(data);
+
+    setIsModalVisible(false);
+    setIsBlurVisible(false);
+    setEditModalVisible(false);
+    setTableBlurred(false);
+  };
+  const fetchProducts = async () => {
+    const response = await fetch(API);
+    const data = await response.json();
+    setProducts(data);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const handleAddProductClick = () => {
     setTitleAdd("Add product");
@@ -47,7 +79,11 @@ function ProductTable() {
           onClick={handleAddProductClick}
         />
         {isModalVisible && (
-          <WindowEditAdd closeModal={closeEditModal} title={titleAdd} />
+          <WindowEditAdd
+            closeModal={closeEditModal}
+            title={titleAdd}
+            addProduct={addProduct}
+          />
         )}
       </div>
 
@@ -66,6 +102,8 @@ function ProductTable() {
           setIsBasketClicked={setIsBasketClicked}
           isBlurVisible={isBlurVisible}
           className={`${isBlurVisible ? "blur-background" : ""}`}
+          products={products}
+          setProducts={setProducts}
         />
       </div>
     </>
