@@ -16,7 +16,6 @@ function AppRouter() {
         <Route element={<PrivateRoute />}>
           <Route path="/product-table/" element={<ProductTable />} />
           <Route path="/product-preview/" element={<ProductPreview />} />
-          <Route path="/edit" element={<WindowEditAdd />} />
           <Route
             path="/product-details/:id"
             element={<ProductDetails products={products} />}

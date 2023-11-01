@@ -5,22 +5,28 @@ import { API } from "../../constance/URL";
 import WindowDelete from "../WindowDelete/WindowDelete";
 import WindowEditAdd from "../WindowEditAdd/WindowEditAdd";
 
-function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
-  const [products, setProducts] = useState([]);
+function ProductsTableItems({
+  setIsDeleteModalVisible,
+  setIsBasketClicked,
+  products,
+  setProducts,
+}) {
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [isTableBlurred, setTableBlurred] = useState(false);
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [titleEdit, setTitleEdit] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isEditClicked, setIsEditClicked] = useState(false);
 
   const deleteProduct = async (id) => {
     await fetch(`${API}/${id}`, {
       method: "DELETE",
     });
-    //запрос нового массива
+    // Запит на отримання нового масиву,але стан з ProductTable
     const response = await fetch(API);
     const data = await response.json();
-    setProducts(data);
+    setProducts(data); //cостояние из ProductTable
 
     closeDeleteModal();
   };
@@ -40,14 +46,36 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
     setTableBlurred(false);
   };
 
+  const fetchProducts = async () => {
+    const response = await fetch(API);
+    const data = await response.json();
+    setProducts(data);
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch(API);
-      const data = await response.json();
-      setProducts(data);
-    };
     fetchProducts();
   }, []);
+
+  const handleEditClick = (product) => {
+    setSelectedProduct(product);
+    setEditModalVisible(true);
+    setTableBlurred(true);
+    setIsEditClicked(true);
+  };
+
+  const updateProduct = async (product) => {
+    const response = await fetch(`${API}/${product.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    if (response.ok) {
+      fetchProducts();
+    }
+  };
 
   return (
     <>
@@ -121,8 +149,10 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
                       isTableBlurred ? "blur-background" : ""
                     }`}
                     onClick={() => {
+                      setSelectedProduct(product);
                       setEditModalVisible(true);
                       setTableBlurred(true);
+                      handleEditClick(product);
                     }}
                   />
 
@@ -145,6 +175,8 @@ function ProductsTableItems({ setIsDeleteModalVisible, setIsBasketClicked }) {
             setTableBlurred(false);
           }}
           title="Edit product"
+          selectedProduct={selectedProduct}
+          updateProduct={updateProduct}
         />
       )}
       {isDeleteModalVisible && (

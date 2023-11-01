@@ -1,11 +1,99 @@
-import "./WindowEditAdd";
 import Lable from "../Lable/Lable";
-
 import React, { useState } from "react";
 
-function WindowEditAdd({ closeModal, title }) {
+function WindowEditAdd({
+  closeModal,
+  title,
+  addProduct,
+  selectedProduct,
+  updateProduct,
+}) {
+  const [name, setName] = useState(selectedProduct ? selectedProduct.name : "");
+  const [category, setCategory] = useState(
+    selectedProduct ? selectedProduct.category : ""
+  );
+  const [quantity, setQuantity] = useState(
+    selectedProduct ? selectedProduct.quantity : ""
+  );
+  const [price, setPrice] = useState(
+    selectedProduct ? selectedProduct.price : ""
+  );
+  const [img, setImg] = useState(selectedProduct ? selectedProduct.img : "");
+  const [description, setDescription] = useState(
+    selectedProduct ? selectedProduct.description : ""
+  );
   const [text, setText] = useState("");
   const [textareaHeight, setTextareaHeight] = useState("auto");
+
+  const [isNameEmpty, setIsNameEmpty] = useState(false);
+  const [isCategoryEmpty, setIsCategoryEmpty] = useState(false);
+  const [isQuantityEmpty, setIsQuantityEmpty] = useState(false);
+  const [isPriceEmpty, setIsPriceEmpty] = useState(false);
+  const [isImgEmpty, setIsImgEmpty] = useState(false);
+
+  const handleAddProduct = async () => {
+    setIsNameEmpty(!name);
+    setIsCategoryEmpty(!category);
+    setIsQuantityEmpty(!quantity);
+    setIsPriceEmpty(!price);
+    if (!img || !img.startsWith("https:")) {
+      setIsImgEmpty(true);
+      setImg("");
+      return;
+    }
+
+    setIsImgEmpty(false);
+
+    if (!name || !category || !quantity || !price || !img) {
+      return;
+    }
+
+    const newProduct = {
+      name,
+      category,
+      quantity,
+      price,
+      img,
+      description,
+    };
+
+    addProduct(newProduct);
+
+    closeModal();
+  };
+
+  const handleEditProduct = async () => {
+    setIsNameEmpty(!name);
+    setIsCategoryEmpty(!category);
+    setIsQuantityEmpty(!quantity);
+    setIsPriceEmpty(!price);
+    setIsImgEmpty(!img);
+
+    if (!img || !img.startsWith("https:")) {
+      setIsImgEmpty(true);
+      setImg("");
+      return;
+    }
+
+    setIsImgEmpty(false);
+
+    if (!name || !category || !quantity || !price || !img) {
+      return;
+    }
+
+    const newProduct = {
+      id: selectedProduct ? selectedProduct.id : null,
+      name,
+      category,
+      quantity,
+      price,
+      img,
+      description,
+    };
+    updateProduct(newProduct);
+
+    closeModal();
+  };
 
   const handleTextChange = (event) => {
     const textarea = event.target;
@@ -19,7 +107,7 @@ function WindowEditAdd({ closeModal, title }) {
       <div
         id="modalId"
         className="flex flex-col items-center fixed top-0 z-20 left-0 right-0 
-          w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+          w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full "
       >
         <div className="relative w-full max-w-md h-full flex items-center mt-[20px] ml-[80px]">
           <div className=" bg-white rounded-lg shadow ">
@@ -53,10 +141,71 @@ function WindowEditAdd({ closeModal, title }) {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <Lable title="Name" id="name" type="text" />
-            <Lable title="Category" id="category" type="text" />
-            <Lable title="Quantity" id="quantity" type="text" />
-            <Lable title="Price" id="price" type="text" />
+            <Lable
+              title="Name"
+              id="name"
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                setIsNameEmpty(false);
+              }}
+              className={isNameEmpty ? "border-red-500" : ""}
+              isError={isNameEmpty}
+            />
+            <Lable
+              title="Category"
+              id="category"
+              type="text"
+              name="category"
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setIsCategoryEmpty(false);
+              }}
+              className={isCategoryEmpty ? "border-red-500" : ""}
+              isError={isCategoryEmpty}
+            />
+            <Lable
+              title="Quantity"
+              id="quantity"
+              type="text"
+              name="quantity"
+              value={quantity}
+              onChange={(e) => {
+                setQuantity(e.target.value);
+                setIsQuantityEmpty(false);
+              }}
+              className={isQuantityEmpty ? "border-red-500" : ""}
+              isError={isQuantityEmpty}
+            />
+            <Lable
+              title="Price"
+              id="price"
+              type="text"
+              name="price"
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value);
+                setIsPriceEmpty(false);
+              }}
+              className={isPriceEmpty ? "border-red-500" : ""}
+              isError={isPriceEmpty}
+            />
+            <Lable
+              title="Img"
+              id="img"
+              type="text"
+              name="img"
+              value={img}
+              onChange={(e) => {
+                setImg(e.target.value);
+                setIsImgEmpty(e.target.value === "");
+              }}
+              className={isImgEmpty ? "border-red-500" : ""}
+              isError={isImgEmpty}
+            />
             <div>
               <label
                 htmlFor="email"
@@ -65,12 +214,15 @@ function WindowEditAdd({ closeModal, title }) {
                 Description
               </label>
               <textarea
-                value={text}
                 style={{ height: textareaHeight }}
-                onChange={handleTextChange}
-                id="subject"
-                name="subject"
-                className="resize-y overflow-hidden bg-gray-50 border-gray-300 text-gray-900 border-2 text-sm rounded-lg block focus:outline-none w-[350px] ml-5 mr-5 p-2.5"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  handleTextChange(e);
+                }}
+                id="description"
+                value={description}
+                name="description"
+                className="resize-y overflow-hidden bg-gray-50 border-gray-300 text-gray-900 border-2 text-sm rounded-lg block focus:outline-none w-[350px] ml-5 mr-5 p-1.5"
               ></textarea>
             </div>
             <div className="flex justify-end items-center p-4 mt-5 space-x-2 border-t border-gray-200 rounded-b ">
@@ -89,6 +241,13 @@ function WindowEditAdd({ closeModal, title }) {
                 id="button-delete"
                 data-modal-hide="small-decline"
                 type="button"
+                onClick={() => {
+                  if (selectedProduct) {
+                    handleEditProduct();
+                  } else {
+                    handleAddProduct();
+                  }
+                }}
                 className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg 
                   border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 focus:bg-red-500 focus:text-white
                    "
